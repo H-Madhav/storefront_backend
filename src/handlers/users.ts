@@ -5,7 +5,7 @@ import verifyAuthToken from '../middleware/verifyAuthToken';
 
 const store = new UserStore()
 
-const index = async (_req: Request, res: Response) => {
+const index = async (_req: Request, res: Response): Promise<void> => {
     try {
         const users = await store.index()
         res.json(users)
@@ -15,7 +15,7 @@ const index = async (_req: Request, res: Response) => {
     }
 }
 
-const show = async (req: Request, res: Response) => {
+const show = async (req: Request, res: Response): Promise<void> => {
    try {
         const user = await store.show(req.params.id);
         if(user) {
@@ -29,7 +29,7 @@ const show = async (req: Request, res: Response) => {
    }
 }
 
-const create = async (req: Request, res: Response) => {
+const create = async (req: Request, res: Response): Promise<void> => {
     const user: User = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,

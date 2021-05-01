@@ -4,7 +4,7 @@ import verifyAuthToken from '../middleware/verifyAuthToken';
 
 const store = new ProductStore()
 
-const index = async (_req: Request, res: Response) => {
+const index = async (_req: Request, res: Response): Promise<void> => {
     try {
         const products = await store.index()
         res.json(products)
@@ -14,7 +14,7 @@ const index = async (_req: Request, res: Response) => {
     }
 }
 
-const show = async (req: Request, res: Response) => {
+const show = async (req: Request, res: Response): Promise<void> => {
     try {
         const product = await store.show(req.params.id)
         res.json(product)
@@ -24,7 +24,7 @@ const show = async (req: Request, res: Response) => {
     }
 }
 
-const create = async (req: Request, res: Response) => {
+const create = async (req: Request, res: Response): Promise<void> => {
     try {
         const product: Product = {
             name: req.body.name,
