@@ -31,8 +31,8 @@ const show = async (req: Request, res: Response): Promise<void> => {
 
 const create = async (req: Request, res: Response): Promise<void> => {
     const user: User = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
         password: req.body.password,
     }
     try {

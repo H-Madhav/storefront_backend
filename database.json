@@ -4,7 +4,7 @@
       "host": "127.0.0.1",
       "database": "full_stack_dev",
       "user": "postgres",
-      "password": "onemorestep"
+      "password": "onemorestep@123"
     },
 
     "test": {
@@ -12,6 +12,6 @@
       "host": "127.0.0.1",
       "database": "full_stack_test",
       "user": "postgres",
-      "password": "onemorestep"
+      "password": "onemorestep@123"
     }
 }

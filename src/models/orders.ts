@@ -39,32 +39,6 @@ export class OrderStore {
 
 	async create(o: Order): Promise<Order> {
 		try {
-			const productsql = 'SELECT * FROM products WHERE id=($1)'
-			const conn = await client.connect()
-			const result = await conn.query(productsql, [o.product_id])
-			const product = result.rows[0]
-			conn.release()
-			if (!product) {
-				throw new Error(`Could not add order, product don't exist`)
-			}
-		} catch (err) {
-			throw new Error(`${err}`)
-		}
-
-		try {
-			const usersql = 'SELECT * FROM users WHERE id=($1)'
-			const conn = await client.connect()
-			const result = await conn.query(usersql, [o.user_id])
-			const user = result.rows[0]
-			conn.release()
-			if (!user) {
-				throw new Error(`Could not add order, user don't exist`)
-			}
-		} catch (err) {
-			throw new Error(`${err}`)
-		}
-
-		try {
 			const sql = 'INSERT INTO orders (quantity, status, product_id, user_id) VALUES($1, $2, $3, $4) RETURNING *'
 			const conn = await client.connect()
 			const result = await conn.query(sql, [o.quantity, o.status, o.product_id, o.user_id])
