@@ -24,8 +24,8 @@ You have to create two database with following names:
 
 I have created the migration file with following commands:
 
-1. db-migrate create users-table --sql-file
-   up:
+1. db-migrate create users-table --sql-file  
+   up:  
    CREATE TABLE users (
    id SERIAL PRIMARY KEY,
    firstname VARCHAR(100),
@@ -35,8 +35,8 @@ I have created the migration file with following commands:
 
 down: DROP TABLE users
 
-2. db-migrate create products-table --sql-file
-   up:
+2. db-migrate create products-table --sql-file  
+   up:  
    CREATE TABLE products (
    id SERIAL PRIMARY KEY,
    name VARCHAR(64) NOT NULL,
@@ -45,8 +45,8 @@ down: DROP TABLE users
 
 down: DROP TABLE products
 
-3. db-migrate create orders-table --sql-file
-   up:
+3. db-migrate create orders-table --sql-file  
+   up:  
    CREATE TABLE orders (
    id SERIAL PRIMARY KEY,
    quantity integer,
