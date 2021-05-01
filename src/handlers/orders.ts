@@ -37,7 +37,6 @@ const create = async (req: Request, res: Response): Promise<void> => {
         res.json(newOrder)
     } catch(err) {
         res.status(400)
-        console.log(err);
         res.json(err)
     }
 }
