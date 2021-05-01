@@ -24,10 +24,12 @@ export class OrderStore {
 	}
   
 	async currentOrderByUser(user_id: string): Promise<Order> {
+		const status: string = "active"
 		try {
-			const sql = 'SELECT * FROM orders WHERE user_id=($1) AND status=active'
+			const sql = 'SELECT * FROM orders WHERE user_id=($1) AND status=($2)'
 			const conn = await client.connect()
-			const result = await conn.query(sql, [user_id])
+			const result = await conn.query(sql, [user_id, status])
+			console.log("result", result)
 			conn.release()
 			return result.rows[0]
 		} catch (err) {
@@ -37,7 +39,7 @@ export class OrderStore {
 
 	async create(o: Order): Promise<Order> {
 		try {
-			const productsql = 'SELECT * FROM product WHERE id=($1)'
+			const productsql = 'SELECT * FROM products WHERE id=($1)'
 			const conn = await client.connect()
 			const result = await conn.query(productsql, [o.product_id])
 			const product = result.rows[0]
