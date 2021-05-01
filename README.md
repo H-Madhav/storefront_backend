@@ -26,33 +26,33 @@ I have created the migration file with following commands:
 
 1. db-migrate create users-table --sql-file  
    up:  
-   CREATE TABLE users (
-   id SERIAL PRIMARY KEY,
-   firstname VARCHAR(100),
-   lastname VARCHAR(100),
-   password VARCHAR
+   CREATE TABLE users (  
+   id SERIAL PRIMARY KEY,  
+   firstname VARCHAR(100),  
+   lastname VARCHAR(100),  
+   password VARCHAR  
    );
 
 down: DROP TABLE users
 
 2. db-migrate create products-table --sql-file  
    up:  
-   CREATE TABLE products (
-   id SERIAL PRIMARY KEY,
-   name VARCHAR(64) NOT NULL,
-   price integer NOT NULL
+   CREATE TABLE products (  
+   id SERIAL PRIMARY KEY,  
+   name VARCHAR(64) NOT NULL,  
+   price integer NOT NULL  
    );
 
 down: DROP TABLE products
 
 3. db-migrate create orders-table --sql-file  
    up:  
-   CREATE TABLE orders (
-   id SERIAL PRIMARY KEY,
-   quantity integer,
-   status VARCHAR(15),
-   product_id bigint REFERENCES products(id),
-   user_id bigint REFERENCES users(id)
+   CREATE TABLE orders (  
+   id SERIAL PRIMARY KEY,  
+   quantity integer,  
+   status VARCHAR(15),  
+   product_id bigint REFERENCES products(id),  
+   user_id bigint REFERENCES users(id)  
    );
 
 down: DROP TABLE orders
