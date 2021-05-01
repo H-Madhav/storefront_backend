@@ -2,7 +2,7 @@
 
 ## Getting Started
 
-This repo contains a basic Node and Express app to get you started in constructing an API. To get started, clone this repo and run `yarn` in your terminal at the project root.
+This repo contains a basic Node and Express app to get you started in constructing an API. To get started, clone this repo and run `npm i` in your terminal at the project root.
 
 ## Required Technologies
 
@@ -42,8 +42,8 @@ You must also ensure that any sensitive information is hashed with bcrypt. If an
    up:
    CREATE TABLE users (
    id SERIAL PRIMARY KEY,
-   firstName VARCHAR(100),
-   lastName VARCHAR(100),
+   firstname VARCHAR(100),
+   lastname VARCHAR(100),
    password VARCHAR
    );
 
