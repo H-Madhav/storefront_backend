@@ -63,3 +63,28 @@ To start the project please start the database
 
 1. run `db-migrate up`
 2. run `npm run watch`
+
+### 5. Testing
+
+1. Make sure full_stack_test database do exist.
+2. run `npm run test`
+
+### 6. Endpoints
+
+#### Users
+
+- Index [token required] -- `/users`
+- Show [token required] -- `/users/:id`
+- Create N[token required] --` /users`
+
+#### Products
+
+- Index -- `/products`
+- Show -- `/products/:id`
+- Create [token required] -- `/products`
+
+#### Orders
+
+- Index -- `/orders`
+- Create [token required] -- `/orders`
+- Current Order by user (args: user id)[token required] -- `/current_order_by_user/:user_id'`
