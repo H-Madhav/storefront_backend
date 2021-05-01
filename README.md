@@ -8,7 +8,7 @@ This repo contains a basic Node and Express app to get you started in constructi
 
 To ready your environment follow these steps:
 
-1.  Create .env in root of project file with following variables:\n
+1.  Create .env in root of project file with following variables:  
     `POSTGRES_HOST=127.0.0.1 POSTGRES_DB=full_stack_dev POSTGRES_TEST_DB=full_stack_test POSTGRES_USER=postgres POSTGRES_PASSWORD=onemorestep@123 BCRYPT_PASSWORD=onemorestep@123 TOKEN_SECRET=Onemorestep@123 ENV=dev SALT_ROUNDS=10`
 
 2.  Change databse.json in root of project in case of different database config:
