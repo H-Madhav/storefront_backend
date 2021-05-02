@@ -43,7 +43,7 @@ const create = async (req: Request, res: Response): Promise<void> => {
 
  
 const orderRoutes = (app: Application) => {
-    app.get('/orders', verifyAuthToken, index)
+    app.get('/orders', index)
     app.post('/orders', verifyAuthToken, create)
     app.get('/current_order_by_user/:user_id', verifyAuthToken, currentOrderByUser)
 }

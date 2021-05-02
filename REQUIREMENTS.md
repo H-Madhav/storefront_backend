@@ -8,31 +8,36 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 #### Products
 
-- Index
-- Show
-- Create [token required]
-- [OPTIONAL] Top 5 most popular products
-- [OPTIONAL] Products by category (args: product category)
+- Index -- route: `/products` [GET]
+- Show -- route:`/products/:id` [GET]
+- Create [token required] -- `/products` [POST]
 
 #### Users
 
-- Index [token required]
-- Show [token required]
-- Create N[token required]
+- Index [token required] -- route: `/users` [GET]
+- Show [token required] -- route: `/users/:id` [GET]
+- Create -- route: ` /users` [POST]
 
 #### Orders
 
-- Current Order by user (args: user id)[token required]
-- [OPTIONAL] Completed Orders by user (args: user id)[token required]
+- Index -- route: `/orders` [GET]
+- Create [token required] -- route: `/orders` [GET]
+- Current Order by user (args: user id)[token required] -- route: `/current_order_by_user/:user_id'` [GET]
 
 ## Data Shapes
+
+#### DATABASE
+
+- full_stack_dev -- `CREATE DATABASE full_stack_dev;`
+- full_stack_test -- `CREATE DATABASE full_stack_test;`
 
 #### Product
 
 - id
 - name
 - price
-- [OPTIONAL] category
+
+  Table: `CREATE TABLE products ( id SERIAL PRIMARY KEY, name VARCHAR(64) NOT NULL, price integer NOT NULL );`
 
 #### User
 
@@ -41,6 +46,8 @@ These are the notes from a meeting with the frontend developer that describe wha
 - lastName
 - password
 
+Table: `CREATE TABLE users ( id SERIAL PRIMARY KEY, firstname VARCHAR(100), lastname VARCHAR(100), password VARCHAR );`
+
 #### Orders
 
 - id
@@ -48,3 +55,5 @@ These are the notes from a meeting with the frontend developer that describe wha
 - status of order (active or complete)
 - id of each product in the order
 - user_id
+
+Table: `CREATE TABLE orders ( id SERIAL PRIMARY KEY, quantity integer, status VARCHAR(15), product_id bigint REFERENCES products(id), user_id bigint REFERENCES users(id) );`
