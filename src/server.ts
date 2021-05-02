@@ -6,7 +6,7 @@ import orderRoutes from './handlers/orders';
 
 
 const app: Application = express()
-const address: string = "0.0.0.0:3000"
+export const address: string = "3000"
 
 app.use(bodyParser.json())
 

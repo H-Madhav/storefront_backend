@@ -29,7 +29,6 @@ export class OrderStore {
 			const sql = 'SELECT * FROM orders WHERE user_id=($1) AND status=($2)'
 			const conn = await client.connect()
 			const result = await conn.query(sql, [user_id, status])
-			console.log("result", result)
 			conn.release()
 			return result.rows[0]
 		} catch (err) {

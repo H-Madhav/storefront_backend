@@ -9,8 +9,7 @@ const index = async (_req: Request, res: Response): Promise<void> => {
         const orders = await store.index()
         res.json(orders)
     } catch(e) {
-        res.status(404)
-        res.json(e)
+        res.status(404).send({error: e})
     }
 }
 
