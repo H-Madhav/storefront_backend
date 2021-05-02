@@ -1,4 +1,8 @@
-import { UserStore } from '../../src/models/users';
+import { UserStore, User } from '../../src/models/users';
+import axios from 'axios';
+let userId: number;
+let token: string;
+const jwt = require('jsonwebtoken');
 
 const store = new UserStore()
 
@@ -15,23 +19,37 @@ describe("User Model", () => {
 		expect(store.create).toBeDefined();
 	});
 
-	it('create method should add a user', async () => {
-		const result = await store.create({
-			firstname: "Hari", 
-			lastname: "Jha", 
-			password: "Hari@123"
+	it('create a user', async () => {
+		const user: User = {
+			"firstname": "Hari",
+			"lastname": "jha",
+			"password": "Hari@123"
+		}
+		const userData = await axios.post('http://localhost:3000/users', {...user});
+		const decoded = jwt.verify(userData.data, process.env.TOKEN_SECRET)
+		userId = decoded.user.id;
+		token = userData.data;
+		expect(userData.status).toBe(200);
+	});
+
+	it('return a list of user', async () => {
+		const result = await axios.get('http://localhost:3000/users', {
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': `Bearer ${token}`
+			}
 		});
-		expect(result).toEqual(jasmine.any(Object));
+		expect(result.data).toBeInstanceOf(Array)
 	});
 
-	it('index method should return a list of user', async () => {
-		const result = await store.index();
-		expect(result).toBeInstanceOf(Array)
-	});
-
-	it('show method should return a user', async () => {
-		const result = await store.show('1');
-		expect(result).toEqual(jasmine.any(Object));
+	it('return a user', async () => {
+		const result = await axios.get(`http://localhost:3000/users/${userId}`, {
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': `Bearer ${token}`
+			}
+		});
+		expect(result.data).toEqual(jasmine.any(Object));
 	});
 
 });

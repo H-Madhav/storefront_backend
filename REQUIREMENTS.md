@@ -22,6 +22,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 - Index -- route: `/orders` [GET]
 - Create [token required] -- route: `/orders` [GET]
+- Add Product in Order (args: order id)[token required] -- route: `/orders/:id/products` [POST]
 - Current Order by user (args: user id)[token required] -- route: `/current_order_by_user/:user_id'` [GET]
 
 ## Data Shapes
@@ -39,7 +40,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 
   Table: `CREATE TABLE products ( id SERIAL PRIMARY KEY, name VARCHAR(64) NOT NULL, price integer NOT NULL );`
 
-#### User
+#### Users
 
 - id
 - firstname
@@ -51,9 +52,16 @@ Table: `CREATE TABLE users ( id SERIAL PRIMARY KEY, firstname VARCHAR(100), last
 #### Orders
 
 - id
+- status
+- user_id
+
+Table: `CREATE TABLE orders ( id SERIAL PRIMARY KEY, status VARCHAR(15), user_id bigint REFERENCES users(id));`
+
+#### OrderProduct
+
+- id
 - quantity of each product in the order
-- status of order (active or complete)
 - id of each product in the order
 - user_id
 
-Table: `CREATE TABLE orders ( id SERIAL PRIMARY KEY, quantity integer, status VARCHAR(15), product_id bigint REFERENCES products(id), user_id bigint REFERENCES users(id) );`
+Table: `CREATE TABLE order_products ( id SERIAL PRIMARY KEY, quantity integer, order_id bigint REFERENCES orders(id), product_id bigint REFERENCES products(id) );`

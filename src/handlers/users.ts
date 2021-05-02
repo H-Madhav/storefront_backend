@@ -45,6 +45,7 @@ const create = async (req: Request, res: Response): Promise<void> => {
     }
 }
 
+
 const userRoutes = (app: Application) => {
     app.get('/users',verifyAuthToken, index)
     app.get('/users/:id', verifyAuthToken, show)

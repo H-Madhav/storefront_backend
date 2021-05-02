@@ -7,7 +7,7 @@
     "start": "node src/server.ts",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\" ",
     "pretest": "db-migrate --env test up",
-    "test": "set ENV=test && jasmine-ts",
+    "test": "jasmine-ts",
     "posttest": "db-migrate db:drop test",
     "tsc": "tsc"
   },

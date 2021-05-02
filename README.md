@@ -49,13 +49,22 @@ down: DROP TABLE products
    up:  
    CREATE TABLE orders (  
    id SERIAL PRIMARY KEY,  
-   quantity integer,  
    status VARCHAR(15),  
-   product_id bigint REFERENCES products(id),  
    user_id bigint REFERENCES users(id)  
    );
 
 down: DROP TABLE orders
+
+4. db-migrate create order_products-table --sql-file  
+    up:  
+   CREATE TABLE order_products (
+   id SERIAL PRIMARY KEY,
+   quantity integer,
+   order_id bigint REFERENCES orders(id),
+   product_id bigint REFERENCES products(id)
+   );
+
+down: DROP TABLE order_products
 
 ### 4. Getting Started
 

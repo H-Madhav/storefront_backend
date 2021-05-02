@@ -1,4 +1,9 @@
-import { ProductStore } from '../../src/models/products';
+import { ProductStore, Product } from '../../src/models/products';
+import { User } from '../../src/models/users';
+import axios from 'axios';
+const jwt = require('jsonwebtoken');
+let productId: number;
+let token: string;
 
 const store = new ProductStore()
 
@@ -15,21 +20,38 @@ describe("Product Model", () => {
 		expect(store.create).toBeDefined();
 	});
 
-	it('create method should add a product', async () => {
-		const result = await store.create({
-			name: 'iphone',
-			price: 1,
+	it('create a product', async () => {
+		const user: User = {
+			"firstname": "Keshav",
+			"lastname": "jha",
+			"password": "Keshav@123"
+		}
+
+		const userData = await axios.post('http://localhost:3000/users', {...user});
+		token = userData.data;
+
+		const product: Product = {
+			'name': 'iphone',
+			'price': 600,
+		}
+
+		const result = await axios.post('http://localhost:3000/products', product, {
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': `Bearer ${token}`
+			}
 		});
-		expect(result).toEqual(jasmine.any(Object));
+		productId = result.data.id? result.data.id : 1;
+		expect(result.data).toEqual(jasmine.any(Object));
 	});
 
-	it('index method should return a list of products', async () => {
-		const result = await store.index();
-		expect(result).toBeInstanceOf(Array)
+	it('return a list of products', async () => {
+		const result = await axios.get('http://localhost:3000/products')
+		expect(result.data).toBeInstanceOf(Array)
 	});
 
-	it('show method should return a product', async () => {
-		const result = await store.show('1');
-		expect(result).toEqual(jasmine.any(Object));
+	it('return a product', async () => {
+		const result = await axios.get(`http://localhost:3000/products/${productId}`)
+		expect(result.data).toEqual(jasmine.any(Object));
 	});
 });

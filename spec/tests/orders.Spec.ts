@@ -3,7 +3,10 @@ import { OrderStore, Order } from '../../src/models/orders';
 import { User } from '../../src/models/users';
 import {Product} from '../../src/models/products';
 const jwt = require('jsonwebtoken');
-let userId: string;
+let userId: number;
+let orderId: number;
+let token: string;
+
 const store = new OrderStore()
 
 describe("Order Model", () => {
@@ -21,46 +24,73 @@ describe("Order Model", () => {
 	
 	it('create method should add an order', async () => {
 		const user: User = {
-			"firstname": "Hari",
-			"lastname": "jha",
-			"password": "Hari@123"
+			"firstname": "Ram",
+			"lastname": "mohan",
+			"password": "Ram@123"
 		}
-		const product: Product = {
-			'name': 'iphone',
-			'price': 600,
-		}
+
 		const userData = await axios.post('http://localhost:3000/users', {...user});
 		const decoded = jwt.verify(userData.data, process.env.TOKEN_SECRET)
 		userId = decoded.user.id;
-		const productData = await axios.post('http://localhost:3000/products', product, {
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': `Bearer ${userData.data}`
-			}
-		});
+		token = userData.data;
+
 		const order: Order = {
-			quantity: 1,
 			status: 'active',
-			product_id: productData.data.id,
 			user_id: decoded.user.id
 		}
+
 		const result = await axios.post('http://localhost:3000/orders', order, {
 			headers: {
 				'Content-Type': 'application/json',
 				'Authorization': `Bearer ${userData.data}`
 			}
 		});
+
+		orderId = result.data.id;
 		expect(result.status).toBe(200)
 	});
 
-	it('index method should return a list of orders', async () => {
-		const result = await axios.get('http://localhost:3000/orders');
+	it('addProduct method should add a product in order', async () => {
+		const product: Product = {
+			'name': 'iphone',
+			'price': 600,
+		}
+
+		const productData = await axios.post('http://localhost:3000/products', {...product}, {
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': `Bearer ${token}`
+			}
+		});
+		
+		const data: {quantity: number, product_id: number} = {
+			quantity: 1,
+			product_id: productData.data.id
+		}
+
+		const result = await axios.post(`http://localhost:3000/orders/${orderId}/products`, data, {
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': `Bearer ${token}`
+			}
+		});
 		expect(result.status).toBe(200)
+	});
+
+
+	it('return a list of orders', async () => {
+		const result = await axios.get('http://localhost:3000/orders');
+		expect(result.data).toBeInstanceOf(Array)
 	});
 
 	it('currentOrderByUser method should return an orders', async () => {
-		const result = await store.currentOrderByUser(userId);
-		expect(result.user_id.toString()).toEqual(userId.toString());
+		const result = await axios.get(`http://localhost:3000/current_order_by_user/${userId.toString()}`, {
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': `Bearer ${token}`
+			}
+		});
+		expect(result.data).toEqual(jasmine.any(Object));
 	});
 
 });
